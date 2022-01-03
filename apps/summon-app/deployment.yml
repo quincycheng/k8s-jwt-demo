@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: summon-app-svc-acc
+  namespace: demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: summon-app-service
+  namespace: demo
+spec:
+  type: LoadBalancer
+  selector:
+    app: summon-app
+  ports:
+    - protocol: TCP
+      port: 3032
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: summon-app
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: summon-app
+  template:
+    metadata:
+      labels:
+        app: summon-app
+    spec:
+      serviceAccountName: summon-app-svc-acc
+      containers:
+      - name: summon-app-container
+        image: localhost:5000/summon-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CONJUR_APPLIANCE_URL
+          value: https://conjur-oss.conjur-server.svc.cluster.local
+        - name: CONJUR_ACCOUNT
+          value: default
+        - name: CONJUR_AUTHN_JWT_SERVICE_ID
+          value: kubernetes
+        - name: CONJUR_SSL_CERTIFICATE
+          valueFrom:
+            configMapKeyRef:
+              key: ssl-certificate
+              name: conjur-ssl-cert
+

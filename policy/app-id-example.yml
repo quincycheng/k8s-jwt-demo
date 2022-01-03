@@ -1,0 +1,18 @@
+- !policy
+  id: kubernetes-apps
+  body:
+      - !group
+
+      - &hosts
+        - !host
+          id: demo
+          annotations:
+              authn-jwt/kubernetes/kubernetes.io/namespace: demo
+
+      - !grant
+        role: !group
+        members: *hosts
+
+- !grant
+  role: !group conjur/authn-jwt/kubernetes/apps
+  member: !group kubernetes-apps

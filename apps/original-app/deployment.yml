@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: original-app-svc-acc
+  namespace: demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: original-app-service
+  namespace: demo
+spec:
+  type: LoadBalancer
+  selector:
+    app: original-app
+  ports:
+    - protocol: TCP
+      port: 3031
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: original-app
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: original-app
+  template:
+    metadata:
+      labels:
+        app: original-app
+    spec:
+      serviceAccountName: original-app-svc-acc
+      containers:
+      - name: original-app-container
+        image: localhost:5000/original-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: THE_SECRET
+          value: thisIsNotSecure
