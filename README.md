@@ -10,6 +10,15 @@ No init container or side car are required for application pods
 This demo tested on minikube v1.24.0 (kubernetes v.1.22.3)
 
 ## Usage
+
+### Environment variables required
+- `CONJUR_AUTHN_JWT_SERVICE_ID`  (e.g. `kubernetes`) **NEW!**
+- `CONJUR_APPLIANCE_URL` (e.g. `https://conjur-oss.conjur-server.svc.cluster.local`)
+- `CONJUR_ACCOUNT` (e.g `default`)
+- `CONJUR_SSL_CERTIFICATE` (You can get your Conjur SSL certificate by updating & executing the following command with your Conjur Follower/OSS FQDN & port:
+
+`openssl s_client -showcerts  -connect ${CONJUR_FQDN}:${CONJUR_PORT} </dev/null 2>/dev/null | sed -n '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' )`
+
 ### To use summon with Authn-JWT
 Follow the guideline on offical doc and replace the summon-conjur provider binary file with the one under `summon-conjur-authn-jwt` folder 
 
@@ -30,5 +39,8 @@ Execute `bin/99-cleanup.sh`
 `summon-conjur-authn-jwt` folder contains compiled binary on various platform based on `v0.8.1` of `summon-conjur` provider
 
 ## Useful Links
- - [Updated Conjur Golang API](https://github.com/quincycheng/conjur-api-go)
- - [Repo of summon-conjur provider with Authn-JWT](https://github.com/quincycheng/summon-conjur)
+ - Updated Conjur Golang API: https://github.com/quincycheng/conjur-api-go
+ - Repo of summon-conjur provider with Authn-JWT: (https://github.com/quincycheng/summon-conjur
+
+Maintainer:
+- [@QuincyCheng](https://github.com/quincycheng)
