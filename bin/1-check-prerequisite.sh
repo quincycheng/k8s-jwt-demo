@@ -32,5 +32,3 @@ else
     echo "Please update Conjur CLI to version 7 or above"
     exit 1
 fi
-
-echo "Ready! Be sure to review conf/conjur.conf & point ${CONJUR_FQDN} to your IP before proceed"

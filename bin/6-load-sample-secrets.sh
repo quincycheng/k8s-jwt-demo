@@ -15,3 +15,5 @@ conjur policy load -f ${SCRIPT_ROOT}/policy/sample-secrets.yml -b root
 # Sample Secret
 conjur variable set -i db/password -v "ThisIsTheSecrets!!"
 
+# Uncomment if you want something more random
+# conjur variable set -i db/password -v $(openssl rand -base64 12)

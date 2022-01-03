@@ -7,3 +7,4 @@ kubectl delete clusterrolebinding/oidc-reviewer
 helm uninstall ${CONJUR_HELM_RELEASE} -n ${CONJUR_NAMESPACE}
 kubectl delete namespace "${CONJUR_NAMESPACE}"
 
+kubectl delete namespace demo
