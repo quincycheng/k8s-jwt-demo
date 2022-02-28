@@ -1,11 +1,12 @@
 # k8s-jwt-demo
-This is a demo on Kubernetes for apps to retrieve secrets based on Conjur Authn-JWT with enhanced JWT summon 
+This is a demo on Kubernetes for apps to retrieve secrets based on Conjur Authn-JWT without the use of init-container or side-cars.
 
 3 pods will be created:
  - Secret injection into environment variable with summon when app starts/restarts
- - App fetches secrets using Conjur API & authn-jwt
+ - App fetches secrets using summon using summon-conjur provider v0.6.2+
+ - App fetches secrets using Conjur Go API v0.9.0+
 
-No init container or side car are required for application pods
+No shared volume, init container or sidecar are required for application pods
 
 This demo tested on minikube v1.24.0 (kubernetes v.1.22.3)
 
