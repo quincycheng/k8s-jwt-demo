@@ -30,8 +30,6 @@ export CONJUR_SSL_CERT=$(openssl s_client -showcerts  -connect ${CONJUR_FQDN}:${
 kubectl -n demo delete configmap/conjur-ssl-cert
 kubectl -n demo create configmap conjur-ssl-cert --from-literal=ssl-certificate="${CONJUR_SSL_CERT}"
 
-cp -f ${SCRIPT_ROOT}/summon-conjur-authn-jwt/summon-conjur_linux_amd64/summon-conjur  ${SCRIPT_ROOT}/apps/summon-app
-
 docker build -t summon-app:latest  ${SCRIPT_ROOT}/apps/summon-app
 
 docker tag summon-app:latest localhost:5000/summon-app:latest
